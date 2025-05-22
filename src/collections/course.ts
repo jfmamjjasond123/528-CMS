@@ -1,0 +1,85 @@
+import { CollectionConfig } from 'payload'
+
+const Courses: CollectionConfig = {
+  slug: 'courses',
+  admin: {
+    useAsTitle: 'title',
+    defaultColumns: ['title', 'category', 'instructor', 'status'],
+  },
+  fields: [
+    {
+      name: 'title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'slug',
+      type: 'text',
+      required: true,
+      unique: true,
+    },
+    {
+      name: 'icon_class',
+      type: 'text',
+      label: 'Icon (Lucide class name)',
+    },
+    // Optional: Uncomment if you'd rather use an image upload
+    // {
+    //   name: 'icon_image',
+    //   type: 'upload',
+    //   relationTo: 'media', // Make sure you have a media collection configured
+    // },
+    {
+      name: 'description_short',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'description_long',
+      type: 'richText',
+    },
+    {
+      name: 'learning_outcomes',
+      type: 'array',
+      fields: [
+        {
+          name: 'outcome',
+          type: 'text',
+        },
+      ],
+    },
+    {
+      name: 'estimated_total_hours',
+      type: 'text',
+    },
+    {
+      name: 'modules',
+      type: 'relationship',
+      relationTo: 'modules',
+      hasMany: false,
+    },
+    {
+      name: 'category',
+      type: 'text',
+    },
+    {
+      name: 'instructor',
+      type: 'text',
+    },
+    {
+      name: 'level',
+      type: 'text',
+    },
+    {
+      name: 'status',
+      type: 'select',
+      defaultValue: 'draft',
+      options: [
+        { label: 'Draft', value: 'draft' },
+        { label: 'Published', value: 'published' },
+      ],
+    },
+  ],
+}
+
+export default Courses

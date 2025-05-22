@@ -147,7 +147,7 @@ export interface Media {
   title: string;
   mediaType: 'image' | 'video';
   /**
-   * Optional: Use this instead of uploading a file.
+   * Use this instead of uploading a file directly.
    */
   externalUrl?: string | null;
   description?: {
@@ -176,6 +176,16 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -250,6 +260,7 @@ export interface Course {
   title: string;
   slug: string;
   icon_class?: string | null;
+  thumbnail?: (number | null) | Media;
   description_short: string;
   description_long?: {
     root: {
@@ -273,7 +284,7 @@ export interface Course {
       }[]
     | null;
   estimated_total_hours?: string | null;
-  modules?: (number | null) | Module;
+  modules?: (number | Module)[] | null;
   category?: string | null;
   instructor?: string | null;
   level?: string | null;
@@ -389,6 +400,20 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -447,6 +472,7 @@ export interface CoursesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   icon_class?: T;
+  thumbnail?: T;
   description_short?: T;
   description_long?: T;
   learning_outcomes?:

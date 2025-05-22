@@ -23,6 +23,11 @@ const Courses: CollectionConfig = {
       type: 'text',
       label: 'Icon (Lucide class name)',
     },
+    {
+      name: 'thumbnail',
+      type: 'upload',
+      relationTo: 'media',
+    },
     // Optional: Uncomment if you'd rather use an image upload
     // {
     //   name: 'icon_image',
@@ -56,7 +61,7 @@ const Courses: CollectionConfig = {
       name: 'modules',
       type: 'relationship',
       relationTo: 'modules',
-      hasMany: false,
+      hasMany: true,
     },
     {
       name: 'category',

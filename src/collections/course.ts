@@ -56,7 +56,7 @@ const Courses: CollectionConfig = {
       name: 'modules',
       type: 'relationship',
       relationTo: 'modules',
-      hasMany: false,
+      hasMany: true,
     },
     {
       name: 'category',

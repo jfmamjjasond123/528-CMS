@@ -273,7 +273,7 @@ export interface Course {
       }[]
     | null;
   estimated_total_hours?: string | null;
-  modules?: (number | null) | Module;
+  modules?: (number | Module)[] | null;
   category?: string | null;
   instructor?: string | null;
   level?: string | null;

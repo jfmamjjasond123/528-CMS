@@ -4,7 +4,13 @@ const Modules: CollectionConfig = {
   slug: 'modules',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'course.category', 'course.instructor', 'course.status'],
+    defaultColumns: [
+      'title',
+      'description',
+      'course.category',
+      'course.instructor',
+      'course.status',
+    ],
   },
   fields: [
     {

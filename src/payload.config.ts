@@ -34,6 +34,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    schemaName: 'payload_cms',
   }),
   sharp,
   plugins: [

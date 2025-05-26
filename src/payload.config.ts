@@ -48,7 +48,11 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+<<<<<<< HEAD
     idType: 'uuid',
+=======
+    schemaName: 'payload_cms',
+>>>>>>> 21474cda0db6d5fc347e6d91c1a59ea6614ffdf6
   }),
   sharp,
   plugins: [

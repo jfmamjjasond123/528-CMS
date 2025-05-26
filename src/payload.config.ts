@@ -13,18 +13,32 @@ import Questions from './collections/question'
 import Modules from './collections/module'
 import Courses from './collections/course'
 import Media from './collections/Media'
+import Categories from './collections/category'
+import Instructors from './collections/instructor'
+import Levels from './collections/level'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  cors: '*',
   admin: {
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Lessons, Questions, Modules, Courses],
+  collections: [
+    Users,
+    Media,
+    Lessons,
+    Questions,
+    Modules,
+    Courses,
+    Categories,
+    Instructors,
+    Levels,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -34,6 +48,7 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+    idType: 'uuid',
   }),
   sharp,
   plugins: [

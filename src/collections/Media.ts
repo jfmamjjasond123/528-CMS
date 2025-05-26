@@ -36,6 +36,9 @@ const Media: CollectionConfig = {
       required: false,
     },
   ],
+  access: {
+    read: () => true,
+  },
 }
 
 export default Media

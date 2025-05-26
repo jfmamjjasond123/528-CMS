@@ -73,6 +73,9 @@ export interface Config {
     questions: Question;
     modules: Module;
     courses: Course;
+    categories: Category;
+    instructors: Instructor;
+    levels: Level;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,12 +88,15 @@ export interface Config {
     questions: QuestionsSelect<false> | QuestionsSelect<true>;
     modules: ModulesSelect<false> | ModulesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
+    categories: CategoriesSelect<false> | CategoriesSelect<true>;
+    instructors: InstructorsSelect<false> | InstructorsSelect<true>;
+    levels: LevelsSelect<false> | LevelsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {};
   globalsSelect: {};
@@ -126,7 +132,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -143,11 +149,11 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   title: string;
   mediaType: 'image' | 'video';
   /**
-   * Use this instead of uploading a file directly.
+   * Optional: Use this instead of uploading a file.
    */
   externalUrl?: string | null;
   description?: {
@@ -176,28 +182,18 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
-  sizes?: {
-    thumbnail?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "lessons".
  */
 export interface Lesson {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   type: 'video' | 'lesson' | 'quiz' | 'exercise';
   duration?: string | null;
-  video?: (number | null) | Media;
+  video?: (string | null) | Media;
   content?: {
     root: {
       type: string;
@@ -213,8 +209,8 @@ export interface Lesson {
     };
     [k: string]: unknown;
   } | null;
-  questions?: (number | Question)[] | null;
-  module: number | Module;
+  questions?: (string | Question)[] | null;
+  module: string | Module;
   order: number;
   updatedAt: string;
   createdAt: string;
@@ -224,7 +220,7 @@ export interface Lesson {
  * via the `definition` "questions".
  */
 export interface Question {
-  id: number;
+  id: string;
   questionText: string;
   type: 'quiz' | 'exercise';
   options: {
@@ -232,7 +228,7 @@ export interface Question {
     id?: string | null;
   }[];
   correctAnswer: string;
-  lessons: number | Lesson;
+  lessons: string | Lesson;
   updatedAt: string;
   createdAt: string;
 }
@@ -241,12 +237,12 @@ export interface Question {
  * via the `definition` "modules".
  */
 export interface Module {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   description?: string | null;
-  course: number | Course;
-  lessons?: (number | Lesson)[] | null;
+  course: string | Course;
+  lessons?: (string | Lesson)[] | null;
   order: number;
   updatedAt: string;
   createdAt: string;
@@ -256,11 +252,11 @@ export interface Module {
  * via the `definition` "courses".
  */
 export interface Course {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   icon_class?: string | null;
-  thumbnail?: (number | null) | Media;
+  thumbnail?: (string | null) | Media;
   description_short: string;
   description_long?: {
     root: {
@@ -284,11 +280,42 @@ export interface Course {
       }[]
     | null;
   estimated_total_hours?: string | null;
-  modules?: (number | Module)[] | null;
-  category?: string | null;
-  instructor?: string | null;
-  level?: string | null;
+  modules?: (string | Module)[] | null;
+  category: string | Category;
+  instructor: string | Instructor;
+  level: string | Level;
   status?: ('draft' | 'published') | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instructors".
+ */
+export interface Instructor {
+  id: string;
+  name: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "levels".
+ */
+export interface Level {
+  id: string;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -297,36 +324,48 @@ export interface Course {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'lessons';
-        value: number | Lesson;
+        value: string | Lesson;
       } | null)
     | ({
         relationTo: 'questions';
-        value: number | Question;
+        value: string | Question;
       } | null)
     | ({
         relationTo: 'modules';
-        value: number | Module;
+        value: string | Module;
       } | null)
     | ({
         relationTo: 'courses';
-        value: number | Course;
+        value: string | Course;
+      } | null)
+    | ({
+        relationTo: 'categories';
+        value: string | Category;
+      } | null)
+    | ({
+        relationTo: 'instructors';
+        value: string | Instructor;
+      } | null)
+    | ({
+        relationTo: 'levels';
+        value: string | Level;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -336,10 +375,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -359,7 +398,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -400,20 +439,6 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
-  sizes?:
-    | T
-    | {
-        thumbnail?:
-          | T
-          | {
-              url?: T;
-              width?: T;
-              height?: T;
-              mimeType?: T;
-              filesize?: T;
-              filename?: T;
-            };
-      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -487,6 +512,34 @@ export interface CoursesSelect<T extends boolean = true> {
   instructor?: T;
   level?: T;
   status?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories_select".
+ */
+export interface CategoriesSelect<T extends boolean = true> {
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "instructors_select".
+ */
+export interface InstructorsSelect<T extends boolean = true> {
+  name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "levels_select".
+ */
+export interface LevelsSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }

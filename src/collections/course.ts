@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 const Courses: CollectionConfig = {
   slug: 'courses',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'instructor', 'status'],
@@ -65,15 +68,21 @@ const Courses: CollectionConfig = {
     },
     {
       name: 'category',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'categories',
+      required: true,
     },
     {
       name: 'instructor',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'instructors',
+      required: true,
     },
     {
       name: 'level',
-      type: 'text',
+      type: 'relationship',
+      relationTo: 'levels',
+      required: true,
     },
     {
       name: 'status',
@@ -83,6 +92,14 @@ const Courses: CollectionConfig = {
         { label: 'Draft', value: 'draft' },
         { label: 'Published', value: 'published' },
       ],
+    },
+    {
+      name: 'order',
+      type: 'number',
+      label: 'Order',
+      admin: {
+        position: 'sidebar', // optional, to show in sidebar
+      },
     },
   ],
 }

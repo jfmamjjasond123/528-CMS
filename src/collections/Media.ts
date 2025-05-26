@@ -1,3 +1,4 @@
+import { Title } from '@/Fields/Title'
 import { CollectionConfig } from 'payload'
 
 const Media: CollectionConfig = {
@@ -8,11 +9,7 @@ const Media: CollectionConfig = {
     defaultColumns: ['title', 'mediaType', 'externalUrl'],
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
+    Title,
     {
       name: 'mediaType',
       type: 'select',

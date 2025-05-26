@@ -1,3 +1,5 @@
+import { Slug } from '@/Fields/slug'
+import { Title } from '@/Fields/Title'
 import { CollectionConfig } from 'payload'
 
 const Courses: CollectionConfig = {
@@ -7,17 +9,8 @@ const Courses: CollectionConfig = {
     defaultColumns: ['title', 'category', 'instructor', 'status'],
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-    },
+    Title,
+    Slug,
     {
       name: 'icon_class',
       type: 'text',

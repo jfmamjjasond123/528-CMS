@@ -1,3 +1,5 @@
+import { Slug } from '@/Fields/slug'
+import { Title } from '@/Fields/Title'
 import { CollectionConfig } from 'payload'
 
 const Modules: CollectionConfig = {
@@ -13,17 +15,8 @@ const Modules: CollectionConfig = {
     ],
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-    },
+    Title,
+    Slug,
     {
       name: 'description',
       type: 'text',

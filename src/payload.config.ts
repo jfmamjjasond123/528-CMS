@@ -23,6 +23,14 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Logo: '@/components/CustomLogo',
+      },
+    },
+  },
+  routes: {
+    admin: '/',
   },
   collections: [Users, Media, Lessons, Questions, Modules, Courses],
   editor: lexicalEditor(),

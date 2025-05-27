@@ -32,7 +32,7 @@ export const Lessons: CollectionConfig = {
     {
       name: 'video',
       type: 'relationship',
-      relationTo: 'media',
+      relationTo: 'mux-video',
 
       admin: {
         condition: (data: any) => data.type === 'video',

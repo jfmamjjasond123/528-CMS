@@ -73,6 +73,7 @@ export interface Config {
     questions: Question;
     modules: Module;
     courses: Course;
+    'mux-video': MuxVideo;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -85,6 +86,7 @@ export interface Config {
     questions: QuestionsSelect<false> | QuestionsSelect<true>;
     modules: ModulesSelect<false> | ModulesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
+    'mux-video': MuxVideoSelect<false> | MuxVideoSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -183,7 +185,7 @@ export interface Lesson {
   slug: string;
   type: 'video' | 'lesson' | 'quiz' | 'exercise';
   duration?: string | null;
-  video?: (number | null) | Media;
+  video?: (number | null) | MuxVideo;
   content?: {
     root: {
       type: string;
@@ -202,6 +204,38 @@ export interface Lesson {
   questions?: (number | Question)[] | null;
   module: number | Module;
   order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mux-video".
+ */
+export interface MuxVideo {
+  id: number;
+  /**
+   * A unique title for this video that will help you identify it later.
+   */
+  title: string;
+  assetId?: string | null;
+  duration?: number | null;
+  /**
+   * Pick a timestamp (in seconds) from the video to be used as the poster image. When unset, defaults to the middle of the video.
+   */
+  posterTimestamp?: number | null;
+  aspectRatio?: string | null;
+  maxWidth?: number | null;
+  maxHeight?: number | null;
+  playbackOptions?:
+    | {
+        playbackId?: string | null;
+        playbackPolicy?: ('signed' | 'public') | null;
+        playbackUrl?: string | null;
+        posterUrl?: string | null;
+        gifUrl?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -308,6 +342,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'courses';
         value: number | Course;
+      } | null)
+    | ({
+        relationTo: 'mux-video';
+        value: number | MuxVideo;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -458,6 +496,31 @@ export interface CoursesSelect<T extends boolean = true> {
   instructor?: T;
   level?: T;
   status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mux-video_select".
+ */
+export interface MuxVideoSelect<T extends boolean = true> {
+  title?: T;
+  assetId?: T;
+  duration?: T;
+  posterTimestamp?: T;
+  aspectRatio?: T;
+  maxWidth?: T;
+  maxHeight?: T;
+  playbackOptions?:
+    | T
+    | {
+        playbackId?: T;
+        playbackPolicy?: T;
+        playbackUrl?: T;
+        posterUrl?: T;
+        gifUrl?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

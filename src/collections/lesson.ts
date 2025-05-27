@@ -1,3 +1,5 @@
+import { Slug } from '@/Fields/slug'
+import { Title } from '@/Fields/Title'
 import { CollectionConfig } from 'payload'
 
 export const Lessons: CollectionConfig = {
@@ -7,17 +9,8 @@ export const Lessons: CollectionConfig = {
     defaultColumns: ['title', 'module.course.title'],
   },
   fields: [
-    {
-      name: 'title',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      required: true,
-      unique: true,
-    },
+    Title,
+    Slug,
     {
       name: 'type',
       type: 'select',
@@ -39,7 +32,7 @@ export const Lessons: CollectionConfig = {
     {
       name: 'video',
       type: 'relationship',
-      relationTo: 'media',
+      relationTo: 'mux-video',
 
       admin: {
         condition: (data: any) => data.type === 'video',

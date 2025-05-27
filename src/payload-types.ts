@@ -73,9 +73,13 @@ export interface Config {
     questions: Question;
     modules: Module;
     courses: Course;
+<<<<<<< HEAD
     categories: Category;
     instructors: Instructor;
     levels: Level;
+=======
+    'mux-video': MuxVideo;
+>>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -88,9 +92,13 @@ export interface Config {
     questions: QuestionsSelect<false> | QuestionsSelect<true>;
     modules: ModulesSelect<false> | ModulesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
+<<<<<<< HEAD
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     instructors: InstructorsSelect<false> | InstructorsSelect<true>;
     levels: LevelsSelect<false> | LevelsSelect<true>;
+=======
+    'mux-video': MuxVideoSelect<false> | MuxVideoSelect<true>;
+>>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -152,10 +160,13 @@ export interface Media {
   id: string;
   title: string;
   mediaType: 'image' | 'video';
+<<<<<<< HEAD
   /**
    * Optional: Use this instead of uploading a file.
    */
   externalUrl?: string | null;
+=======
+>>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
   description?: {
     root: {
       type: string;
@@ -193,7 +204,11 @@ export interface Lesson {
   slug: string;
   type: 'video' | 'lesson' | 'quiz' | 'exercise';
   duration?: string | null;
+<<<<<<< HEAD
   video?: (string | null) | Media;
+=======
+  video?: (number | null) | MuxVideo;
+>>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
   content?: {
     root: {
       type: string;
@@ -212,6 +227,38 @@ export interface Lesson {
   questions?: (string | Question)[] | null;
   module: string | Module;
   order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mux-video".
+ */
+export interface MuxVideo {
+  id: number;
+  /**
+   * A unique title for this video that will help you identify it later.
+   */
+  title: string;
+  assetId?: string | null;
+  duration?: number | null;
+  /**
+   * Pick a timestamp (in seconds) from the video to be used as the poster image. When unset, defaults to the middle of the video.
+   */
+  posterTimestamp?: number | null;
+  aspectRatio?: string | null;
+  maxWidth?: number | null;
+  maxHeight?: number | null;
+  playbackOptions?:
+    | {
+        playbackId?: string | null;
+        playbackPolicy?: ('signed' | 'public') | null;
+        playbackUrl?: string | null;
+        posterUrl?: string | null;
+        gifUrl?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -348,6 +395,7 @@ export interface PayloadLockedDocument {
       } | null)
     | ({
         relationTo: 'courses';
+<<<<<<< HEAD
         value: string | Course;
       } | null)
     | ({
@@ -361,6 +409,13 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'levels';
         value: string | Level;
+=======
+        value: number | Course;
+      } | null)
+    | ({
+        relationTo: 'mux-video';
+        value: number | MuxVideo;
+>>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
       } | null);
   globalSlug?: string | null;
   user: {
@@ -426,7 +481,6 @@ export interface UsersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   title?: T;
   mediaType?: T;
-  externalUrl?: T;
   description?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -540,6 +594,31 @@ export interface InstructorsSelect<T extends boolean = true> {
  */
 export interface LevelsSelect<T extends boolean = true> {
   name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mux-video_select".
+ */
+export interface MuxVideoSelect<T extends boolean = true> {
+  title?: T;
+  assetId?: T;
+  duration?: T;
+  posterTimestamp?: T;
+  aspectRatio?: T;
+  maxWidth?: T;
+  maxHeight?: T;
+  playbackOptions?:
+    | T
+    | {
+        playbackId?: T;
+        playbackPolicy?: T;
+        playbackUrl?: T;
+        posterUrl?: T;
+        gifUrl?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
 }

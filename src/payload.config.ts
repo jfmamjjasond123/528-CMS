@@ -13,9 +13,13 @@ import Questions from './collections/question'
 import Modules from './collections/module'
 import Courses from './collections/course'
 import Media from './collections/Media'
+<<<<<<< HEAD
 import Categories from './collections/category'
 import Instructors from './collections/instructor'
 import Levels from './collections/level'
+=======
+import { muxVideoPlugin } from '@oversightstudio/mux-video'
+>>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -27,6 +31,15 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Logo: '@/components/CustomLogo',
+      },
+      // afterLogin: ['@/components/LoginButton'],
+    },
+  },
+  routes: {
+    admin: '/',
   },
   collections: [
     Users,
@@ -58,5 +71,16 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     // storage-adapter-placeholder
+    muxVideoPlugin({
+      enabled: true,
+      initSettings: {
+        tokenId: process.env.MUX_TOKEN_ID || '',
+        tokenSecret: process.env.MUX_TOKEN_SECRET || '',
+        webhookSecret: process.env.MUX_WEBHOOK_SIGNING_SECRET || '',
+      },
+      uploadSettings: {
+        cors_origin: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
+      },
+    }),
   ],
 })

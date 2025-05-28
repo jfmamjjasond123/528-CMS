@@ -73,13 +73,10 @@ export interface Config {
     questions: Question;
     modules: Module;
     courses: Course;
-<<<<<<< HEAD
     categories: Category;
     instructors: Instructor;
     levels: Level;
-=======
     'mux-video': MuxVideo;
->>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -92,13 +89,10 @@ export interface Config {
     questions: QuestionsSelect<false> | QuestionsSelect<true>;
     modules: ModulesSelect<false> | ModulesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
-<<<<<<< HEAD
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     instructors: InstructorsSelect<false> | InstructorsSelect<true>;
     levels: LevelsSelect<false> | LevelsSelect<true>;
-=======
     'mux-video': MuxVideoSelect<false> | MuxVideoSelect<true>;
->>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -160,13 +154,6 @@ export interface Media {
   id: string;
   title: string;
   mediaType: 'image' | 'video';
-<<<<<<< HEAD
-  /**
-   * Optional: Use this instead of uploading a file.
-   */
-  externalUrl?: string | null;
-=======
->>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
   description?: {
     root: {
       type: string;
@@ -202,13 +189,24 @@ export interface Lesson {
   id: string;
   title: string;
   slug: string;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   type: 'video' | 'lesson' | 'quiz' | 'exercise';
-  duration?: string | null;
-<<<<<<< HEAD
-  video?: (string | null) | Media;
-=======
-  video?: (number | null) | MuxVideo;
->>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
+  duration: number;
+  video?: (string | null) | MuxVideo;
   content?: {
     root: {
       type: string;
@@ -235,7 +233,7 @@ export interface Lesson {
  * via the `definition` "mux-video".
  */
 export interface MuxVideo {
-  id: number;
+  id: string;
   /**
    * A unique title for this video that will help you identify it later.
    */
@@ -395,7 +393,6 @@ export interface PayloadLockedDocument {
       } | null)
     | ({
         relationTo: 'courses';
-<<<<<<< HEAD
         value: string | Course;
       } | null)
     | ({
@@ -409,13 +406,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'levels';
         value: string | Level;
-=======
-        value: number | Course;
       } | null)
     | ({
         relationTo: 'mux-video';
-        value: number | MuxVideo;
->>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
+        value: string | MuxVideo;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -501,6 +495,7 @@ export interface MediaSelect<T extends boolean = true> {
 export interface LessonsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  description?: T;
   type?: T;
   duration?: T;
   video?: T;

@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 const Questions: CollectionConfig = {
   slug: 'questions',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'questionText',
     listSearchableFields: ['questionText'],

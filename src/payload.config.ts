@@ -13,13 +13,10 @@ import Questions from './collections/question'
 import Modules from './collections/module'
 import Courses from './collections/course'
 import Media from './collections/Media'
-<<<<<<< HEAD
 import Categories from './collections/category'
 import Instructors from './collections/instructor'
 import Levels from './collections/level'
-=======
 import { muxVideoPlugin } from '@oversightstudio/mux-video'
->>>>>>> db2884db44da046671ae6f78363f1e2cd1ac8963
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -61,11 +58,8 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
-<<<<<<< HEAD
     idType: 'uuid',
-=======
-    schemaName: 'payload_cms',
->>>>>>> 21474cda0db6d5fc347e6d91c1a59ea6614ffdf6
+    // schemaName: 'payload_cms',
   }),
   sharp,
   plugins: [
@@ -73,6 +67,7 @@ export default buildConfig({
     // storage-adapter-placeholder
     muxVideoPlugin({
       enabled: true,
+      access: () => true,
       initSettings: {
         tokenId: process.env.MUX_TOKEN_ID || '',
         tokenSecret: process.env.MUX_TOKEN_SECRET || '',

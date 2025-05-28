@@ -4,6 +4,9 @@ import { CollectionConfig } from 'payload'
 
 export const Lessons: CollectionConfig = {
   slug: 'lessons',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'module.course.title'],
@@ -11,6 +14,11 @@ export const Lessons: CollectionConfig = {
   fields: [
     Title,
     Slug,
+    {
+      name: 'description',
+      type: 'richText',
+      label: 'Description',
+    },
     {
       name: 'type',
       type: 'select',
@@ -24,16 +32,20 @@ export const Lessons: CollectionConfig = {
     },
     {
       name: 'duration',
-      type: 'text',
+      type: 'number',
+      required: true,
+      label: 'Duration (minutes)',
       admin: {
-        condition: (data: any) => ['video', 'lesson'].includes(data.type),
+        placeholder: 'Enter duration in minutes',
       },
     },
     {
       name: 'video',
       type: 'relationship',
       relationTo: 'mux-video',
-
+      access: {
+        read: () => true,
+      },
       admin: {
         condition: (data: any) => data.type === 'video',
       },

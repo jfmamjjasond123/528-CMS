@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 const Categories: CollectionConfig = {
   slug: 'categories',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title'],

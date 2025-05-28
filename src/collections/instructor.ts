@@ -2,6 +2,9 @@ import { CollectionConfig } from 'payload'
 
 const Instructors: CollectionConfig = {
   slug: 'instructors',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name'],

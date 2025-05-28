@@ -4,6 +4,9 @@ import { CollectionConfig } from 'payload'
 
 const Modules: CollectionConfig = {
   slug: 'modules',
+  access: {
+    read: () => true,
+  },
   admin: {
     useAsTitle: 'title',
     defaultColumns: [

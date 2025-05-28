@@ -59,7 +59,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
     idType: 'uuid',
-    // schemaName: 'payload_cms',
+    schemaName: 'payload_cms',
   }),
   sharp,
   plugins: [

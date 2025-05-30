@@ -4,7 +4,7 @@ import { CollectionConfig } from 'payload'
 const Media: CollectionConfig = {
   slug: 'media',
   upload: {
-    staticDir: 'media',
+    staticDir: '/tmp/media',
   },
   admin: {
     useAsTitle: 'title',

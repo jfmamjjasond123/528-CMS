@@ -1,12 +1,12 @@
 {
-  "id": "af63228b-5cb3-4f55-afb3-b7a9a91ed8a1",
+  "id": "9825536c-5dc2-4471-a364-fc584c702ebc",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.users": {
+    "payload_cms.users": {
       "name": "users",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -127,9 +127,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.media": {
+    "payload_cms.media": {
       "name": "media",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -147,7 +147,7 @@
         "media_type": {
           "name": "media_type",
           "type": "enum_media_media_type",
-          "typeSchema": "public",
+          "typeSchema": "payload_cms",
           "primaryKey": false,
           "notNull": true
         },
@@ -280,9 +280,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.lessons": {
+    "payload_cms.lessons": {
       "name": "lessons",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -312,15 +312,15 @@
         "type": {
           "name": "type",
           "type": "enum_lessons_type",
-          "typeSchema": "public",
+          "typeSchema": "payload_cms",
           "primaryKey": false,
           "notNull": true
         },
         "duration": {
           "name": "duration",
-          "type": "numeric",
+          "type": "varchar",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "video_id": {
           "name": "video_id",
@@ -443,6 +443,7 @@
           "name": "lessons_video_id_mux_video_id_fk",
           "tableFrom": "lessons",
           "tableTo": "mux_video",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "video_id"
           ],
@@ -456,6 +457,7 @@
           "name": "lessons_module_id_modules_id_fk",
           "tableFrom": "lessons",
           "tableTo": "modules",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "module_id"
           ],
@@ -472,9 +474,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.lessons_rels": {
+    "payload_cms.lessons_rels": {
       "name": "lessons_rels",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -574,6 +576,7 @@
           "name": "lessons_rels_parent_fk",
           "tableFrom": "lessons_rels",
           "tableTo": "lessons",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "parent_id"
           ],
@@ -587,6 +590,7 @@
           "name": "lessons_rels_questions_fk",
           "tableFrom": "lessons_rels",
           "tableTo": "questions",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "questions_id"
           ],
@@ -603,9 +607,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.questions_options": {
+    "payload_cms.questions_options": {
       "name": "questions_options",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "_order": {
           "name": "_order",
@@ -669,6 +673,7 @@
           "name": "questions_options_parent_id_fk",
           "tableFrom": "questions_options",
           "tableTo": "questions",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -685,9 +690,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.questions": {
+    "payload_cms.questions": {
       "name": "questions",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -705,7 +710,7 @@
         "type": {
           "name": "type",
           "type": "enum_questions_type",
-          "typeSchema": "public",
+          "typeSchema": "payload_cms",
           "primaryKey": false,
           "notNull": true
         },
@@ -788,6 +793,7 @@
           "name": "questions_lessons_id_lessons_id_fk",
           "tableFrom": "questions",
           "tableTo": "lessons",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "lessons_id"
           ],
@@ -804,9 +810,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.modules": {
+    "payload_cms.modules": {
       "name": "modules",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -927,6 +933,7 @@
           "name": "modules_course_id_courses_id_fk",
           "tableFrom": "modules",
           "tableTo": "courses",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "course_id"
           ],
@@ -943,9 +950,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.modules_rels": {
+    "payload_cms.modules_rels": {
       "name": "modules_rels",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -1045,6 +1052,7 @@
           "name": "modules_rels_parent_fk",
           "tableFrom": "modules_rels",
           "tableTo": "modules",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "parent_id"
           ],
@@ -1058,6 +1066,7 @@
           "name": "modules_rels_lessons_fk",
           "tableFrom": "modules_rels",
           "tableTo": "lessons",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "lessons_id"
           ],
@@ -1074,9 +1083,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.courses_learning_outcomes": {
+    "payload_cms.courses_learning_outcomes": {
       "name": "courses_learning_outcomes",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "_order": {
           "name": "_order",
@@ -1140,6 +1149,7 @@
           "name": "courses_learning_outcomes_parent_id_fk",
           "tableFrom": "courses_learning_outcomes",
           "tableTo": "courses",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -1156,9 +1166,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.courses": {
+    "payload_cms.courses": {
       "name": "courses",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -1230,7 +1240,7 @@
         "status": {
           "name": "status",
           "type": "enum_courses_status",
-          "typeSchema": "public",
+          "typeSchema": "payload_cms",
           "primaryKey": false,
           "notNull": false,
           "default": "'draft'"
@@ -1368,6 +1378,7 @@
           "name": "courses_thumbnail_id_media_id_fk",
           "tableFrom": "courses",
           "tableTo": "media",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "thumbnail_id"
           ],
@@ -1381,6 +1392,7 @@
           "name": "courses_category_id_categories_id_fk",
           "tableFrom": "courses",
           "tableTo": "categories",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "category_id"
           ],
@@ -1394,6 +1406,7 @@
           "name": "courses_instructor_id_instructors_id_fk",
           "tableFrom": "courses",
           "tableTo": "instructors",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "instructor_id"
           ],
@@ -1407,6 +1420,7 @@
           "name": "courses_level_id_levels_id_fk",
           "tableFrom": "courses",
           "tableTo": "levels",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "level_id"
           ],
@@ -1423,9 +1437,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.courses_rels": {
+    "payload_cms.courses_rels": {
       "name": "courses_rels",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -1525,6 +1539,7 @@
           "name": "courses_rels_parent_fk",
           "tableFrom": "courses_rels",
           "tableTo": "courses",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "parent_id"
           ],
@@ -1538,6 +1553,7 @@
           "name": "courses_rels_modules_fk",
           "tableFrom": "courses_rels",
           "tableTo": "modules",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "modules_id"
           ],
@@ -1554,9 +1570,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.categories": {
+    "payload_cms.categories": {
       "name": "categories",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -1625,9 +1641,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.instructors": {
+    "payload_cms.instructors": {
       "name": "instructors",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -1696,9 +1712,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.levels": {
+    "payload_cms.levels": {
       "name": "levels",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -1767,9 +1783,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.mux_video_playback_options": {
+    "payload_cms.mux_video_playback_options": {
       "name": "mux_video_playback_options",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "_order": {
           "name": "_order",
@@ -1798,7 +1814,7 @@
         "playback_policy": {
           "name": "playback_policy",
           "type": "enum_mux_video_playback_options_playback_policy",
-          "typeSchema": "public",
+          "typeSchema": "payload_cms",
           "primaryKey": false,
           "notNull": false
         }
@@ -1840,6 +1856,7 @@
           "name": "mux_video_playback_options_parent_id_fk",
           "tableFrom": "mux_video_playback_options",
           "tableTo": "mux_video",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "_parent_id"
           ],
@@ -1856,9 +1873,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.mux_video": {
+    "payload_cms.mux_video": {
       "name": "mux_video",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -1978,9 +1995,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_locked_documents": {
+    "payload_cms.payload_locked_documents": {
       "name": "payload_locked_documents",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -2064,9 +2081,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_locked_documents_rels": {
+    "payload_cms.payload_locked_documents_rels": {
       "name": "payload_locked_documents_rels",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -2355,6 +2372,7 @@
           "name": "payload_locked_documents_rels_parent_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "payload_locked_documents",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "parent_id"
           ],
@@ -2368,6 +2386,7 @@
           "name": "payload_locked_documents_rels_users_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "users",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "users_id"
           ],
@@ -2381,6 +2400,7 @@
           "name": "payload_locked_documents_rels_media_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "media",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "media_id"
           ],
@@ -2394,6 +2414,7 @@
           "name": "payload_locked_documents_rels_lessons_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "lessons",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "lessons_id"
           ],
@@ -2407,6 +2428,7 @@
           "name": "payload_locked_documents_rels_questions_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "questions",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "questions_id"
           ],
@@ -2420,6 +2442,7 @@
           "name": "payload_locked_documents_rels_modules_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "modules",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "modules_id"
           ],
@@ -2433,6 +2456,7 @@
           "name": "payload_locked_documents_rels_courses_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "courses",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "courses_id"
           ],
@@ -2446,6 +2470,7 @@
           "name": "payload_locked_documents_rels_categories_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "categories",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "categories_id"
           ],
@@ -2459,6 +2484,7 @@
           "name": "payload_locked_documents_rels_instructors_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "instructors",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "instructors_id"
           ],
@@ -2472,6 +2498,7 @@
           "name": "payload_locked_documents_rels_levels_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "levels",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "levels_id"
           ],
@@ -2485,6 +2512,7 @@
           "name": "payload_locked_documents_rels_mux_video_fk",
           "tableFrom": "payload_locked_documents_rels",
           "tableTo": "mux_video",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "mux_video_id"
           ],
@@ -2501,9 +2529,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_preferences": {
+    "payload_cms.payload_preferences": {
       "name": "payload_preferences",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -2593,9 +2621,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_preferences_rels": {
+    "payload_cms.payload_preferences_rels": {
       "name": "payload_preferences_rels",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -2695,6 +2723,7 @@
           "name": "payload_preferences_rels_parent_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "payload_preferences",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "parent_id"
           ],
@@ -2708,6 +2737,7 @@
           "name": "payload_preferences_rels_users_fk",
           "tableFrom": "payload_preferences_rels",
           "tableTo": "users",
+          "schemaTo": "payload_cms",
           "columnsFrom": [
             "users_id"
           ],
@@ -2724,9 +2754,9 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.payload_migrations": {
+    "payload_cms.payload_migrations": {
       "name": "payload_migrations",
-      "schema": "",
+      "schema": "payload_cms",
       "columns": {
         "id": {
           "name": "id",
@@ -2803,50 +2833,50 @@
     }
   },
   "enums": {
-    "public.enum_media_media_type": {
+    "payload_cms.enum_media_media_type": {
       "name": "enum_media_media_type",
-      "schema": "public",
+      "schema": "payload_cms",
       "values": [
         "image",
         "video"
       ]
     },
-    "public.enum_lessons_type": {
+    "payload_cms.enum_lessons_type": {
       "name": "enum_lessons_type",
-      "schema": "public",
+      "schema": "payload_cms",
       "values": [
         "video",
-        "lesson",
-        "quiz",
-        "exercise"
+        "lesson"
       ]
     },
-    "public.enum_questions_type": {
+    "payload_cms.enum_questions_type": {
       "name": "enum_questions_type",
-      "schema": "public",
+      "schema": "payload_cms",
       "values": [
         "quiz",
         "exercise"
       ]
     },
-    "public.enum_courses_status": {
+    "payload_cms.enum_courses_status": {
       "name": "enum_courses_status",
-      "schema": "public",
+      "schema": "payload_cms",
       "values": [
         "draft",
         "published"
       ]
     },
-    "public.enum_mux_video_playback_options_playback_policy": {
+    "payload_cms.enum_mux_video_playback_options_playback_policy": {
       "name": "enum_mux_video_playback_options_playback_policy",
-      "schema": "public",
+      "schema": "payload_cms",
       "values": [
         "signed",
         "public"
       ]
     }
   },
-  "schemas": {},
+  "schemas": {
+    "payload_cms": "payload_cms"
+  },
   "sequences": {},
   "roles": {},
   "policies": {},

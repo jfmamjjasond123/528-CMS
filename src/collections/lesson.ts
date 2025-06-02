@@ -26,15 +26,14 @@ export const Lessons: CollectionConfig = {
       options: [
         { label: 'Video', value: 'video' },
         { label: 'Lesson', value: 'lesson' },
-        { label: 'Quiz', value: 'quiz' },
-        { label: 'Exercise', value: 'exercise' },
+        // { label: 'Quiz', value: 'quiz' },
+        // { label: 'Exercise', value: 'exercise' },
       ],
     },
     {
       name: 'duration',
-      type: 'number',
-      required: true,
-      label: 'Duration (minutes)',
+      type: 'text',
+      label: 'Duration',
       admin: {
         placeholder: 'Enter duration in minutes',
       },

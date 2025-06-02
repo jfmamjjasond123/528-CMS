@@ -204,8 +204,8 @@ export interface Lesson {
     };
     [k: string]: unknown;
   } | null;
-  type: 'video' | 'lesson' | 'quiz' | 'exercise';
-  duration: number;
+  type: 'video' | 'lesson';
+  duration?: string | null;
   video?: (string | null) | MuxVideo;
   content?: {
     root: {

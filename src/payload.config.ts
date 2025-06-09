@@ -16,6 +16,9 @@ import Media from './collections/Media'
 import Categories from './collections/category'
 import Instructors from './collections/instructor'
 import Levels from './collections/level'
+import Exams from './collections/exams'
+import Passages from './collections/passages'
+import PassageQuestions from './collections/passageQuestions'
 import { muxVideoPlugin } from '@oversightstudio/mux-video'
 
 const filename = fileURLToPath(import.meta.url)
@@ -48,6 +51,9 @@ export default buildConfig({
     Categories,
     Instructors,
     Levels,
+    Passages,
+    PassageQuestions,
+    Exams,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

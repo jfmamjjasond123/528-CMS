@@ -76,6 +76,9 @@ export interface Config {
     categories: Category;
     instructors: Instructor;
     levels: Level;
+    passages: Passage;
+    passageQuestions: PassageQuestion;
+    exams: Exam;
     'mux-video': MuxVideo;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +95,9 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     instructors: InstructorsSelect<false> | InstructorsSelect<true>;
     levels: LevelsSelect<false> | LevelsSelect<true>;
+    passages: PassagesSelect<false> | PassagesSelect<true>;
+    passageQuestions: PassageQuestionsSelect<false> | PassageQuestionsSelect<true>;
+    exams: ExamsSelect<false> | ExamsSelect<true>;
     'mux-video': MuxVideoSelect<false> | MuxVideoSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -366,6 +372,85 @@ export interface Level {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "passages".
+ */
+export interface Passage {
+  id: string;
+  title: string;
+  exam: string | Exam;
+  content: {
+    [k: string]: unknown;
+  }[];
+  /**
+   * Questions associated with this passage
+   */
+  questions?: (string | PassageQuestion)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams".
+ */
+export interface Exam {
+  id: string;
+  title: string;
+  slug: string;
+  totalTimeInMinutes: number;
+  /**
+   * Please select the passages for this exam
+   */
+  passages?: (string | Passage)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "passageQuestions".
+ */
+export interface PassageQuestion {
+  id: string;
+  /**
+   * Please select the passage this question belongs to
+   */
+  passage?: (string | null) | Passage;
+  /**
+   * Select the exam this question belongs to
+   */
+  exam?: (string | null) | Exam;
+  /**
+   * Please enter the question number
+   */
+  questionNumber?: number | null;
+  text: {
+    [k: string]: unknown;
+  }[];
+  /**
+   * Upload an image for the question (optional)
+   */
+  image?: (string | null) | Media;
+  /**
+   * Add options for the question. Make sure to mark exactly one option as correct.
+   */
+  options?:
+    | {
+        id?: string | null;
+        text: string;
+        /**
+         * Upload an image for this option (optional)
+         */
+        image?: (string | null) | Media;
+        /**
+         * Mark this option as the correct answer
+         */
+        isCorrect: boolean;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -406,6 +491,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'levels';
         value: string | Level;
+      } | null)
+    | ({
+        relationTo: 'passages';
+        value: string | Passage;
+      } | null)
+    | ({
+        relationTo: 'passageQuestions';
+        value: string | PassageQuestion;
+      } | null)
+    | ({
+        relationTo: 'exams';
+        value: string | Exam;
       } | null)
     | ({
         relationTo: 'mux-video';
@@ -589,6 +686,51 @@ export interface InstructorsSelect<T extends boolean = true> {
  */
 export interface LevelsSelect<T extends boolean = true> {
   name?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "passages_select".
+ */
+export interface PassagesSelect<T extends boolean = true> {
+  title?: T;
+  exam?: T;
+  content?: T;
+  questions?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "passageQuestions_select".
+ */
+export interface PassageQuestionsSelect<T extends boolean = true> {
+  passage?: T;
+  exam?: T;
+  questionNumber?: T;
+  text?: T;
+  image?: T;
+  options?:
+    | T
+    | {
+        id?: T;
+        text?: T;
+        image?: T;
+        isCorrect?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "exams_select".
+ */
+export interface ExamsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  totalTimeInMinutes?: T;
+  passages?: T;
   updatedAt?: T;
   createdAt?: T;
 }

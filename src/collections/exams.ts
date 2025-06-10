@@ -29,6 +29,13 @@ const Exams: CollectionConfig = {
         description: 'Please select the passages for this exam',
       },
     },
+    {
+      name: 'type',
+      type: 'select',
+      options: ['Full-Length Exam', 'Q-bank', 'Timed-Q-bank'],
+      defaultValue: 'Q-bank',
+      required: true,
+    },
   ],
 }
 

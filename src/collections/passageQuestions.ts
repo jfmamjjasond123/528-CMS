@@ -62,14 +62,14 @@ const Questions: CollectionConfig = {
       }),
       required: true,
     },
-    {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      admin: {
-        description: 'Upload an image for the question (optional)',
-      },
-    },
+    // {
+    //   name: 'image',
+    //   type: 'upload',
+    //   relationTo: 'media',
+    //   admin: {
+    //     description: 'Upload an image for the question (optional)',
+    //   },
+    // },
     {
       name: 'options',
       type: 'array',

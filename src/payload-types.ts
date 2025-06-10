@@ -401,6 +401,7 @@ export interface Exam {
    * Please select the passages for this exam
    */
   passages?: (string | Passage)[] | null;
+  type: 'Full-Length Exam' | 'Q-bank' | 'Timed-Q-bank';
   updatedAt: string;
   createdAt: string;
 }
@@ -425,10 +426,6 @@ export interface PassageQuestion {
   text: {
     [k: string]: unknown;
   }[];
-  /**
-   * Upload an image for the question (optional)
-   */
-  image?: (string | null) | Media;
   /**
    * Add options for the question. Make sure to mark exactly one option as correct.
    */
@@ -710,7 +707,6 @@ export interface PassageQuestionsSelect<T extends boolean = true> {
   exam?: T;
   questionNumber?: T;
   text?: T;
-  image?: T;
   options?:
     | T
     | {
@@ -731,6 +727,7 @@ export interface ExamsSelect<T extends boolean = true> {
   slug?: T;
   totalTimeInMinutes?: T;
   passages?: T;
+  type?: T;
   updatedAt?: T;
   createdAt?: T;
 }

@@ -19,6 +19,9 @@ const Exams: CollectionConfig = {
       label: 'Total Time (Minutes)',
       type: 'number',
       required: true,
+      admin: {
+        description: 'If exam type is Q-bank, total is not required Please give 0 minute as value',
+      },
     },
     {
       name: 'passages',

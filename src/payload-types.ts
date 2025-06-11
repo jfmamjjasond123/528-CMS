@@ -396,6 +396,9 @@ export interface Exam {
   id: string;
   title: string;
   slug: string;
+  /**
+   * If exam type is Q-bank, total is not required Please give 0 minute as value
+   */
   totalTimeInMinutes: number;
   /**
    * Please select the passages for this exam
@@ -441,6 +444,14 @@ export interface PassageQuestion {
          * Mark this option as the correct answer
          */
         isCorrect: boolean;
+      }[]
+    | null;
+  /**
+   * Give the explanation for the question if available
+   */
+  'Question Explanation'?:
+    | {
+        [k: string]: unknown;
       }[]
     | null;
   updatedAt: string;
@@ -715,6 +726,7 @@ export interface PassageQuestionsSelect<T extends boolean = true> {
         image?: T;
         isCorrect?: T;
       };
+  'Question Explanation'?: T;
   updatedAt?: T;
   createdAt?: T;
 }

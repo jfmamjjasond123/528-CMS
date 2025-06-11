@@ -56,6 +56,8 @@ const Questions: CollectionConfig = {
             'ul',
             'indent',
             'upload',
+            'textAlign',
+            'relationship',
           ],
           leaves: ['bold', 'italic', 'underline', 'code'],
         },
@@ -110,6 +112,34 @@ const Questions: CollectionConfig = {
         description:
           'Add options for the question. Make sure to mark exactly one option as correct.',
       },
+    },
+    {
+      name: 'Question Explanation',
+      type: 'richText',
+      admin: {
+        description: 'Give the explanation for the question if available',
+      },
+      editor: slateEditor({
+        admin: {
+          elements: [
+            'h1',
+            'h2',
+            'h3',
+            'h4',
+            'h5',
+            'h6',
+            'blockquote',
+            'link',
+            'ol',
+            'ul',
+            'indent',
+            'upload',
+            'textAlign',
+            'relationship',
+          ],
+          leaves: ['bold', 'italic', 'underline', 'code'],
+        },
+      }),
     },
   ],
 }

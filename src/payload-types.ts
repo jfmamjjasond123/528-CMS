@@ -419,9 +419,9 @@ export interface PassageQuestion {
    */
   passage?: (string | null) | Passage;
   /**
-   * Please enter the question number
+   * Please enter the question title
    */
-  questionNumber?: number | null;
+  questionTitle?: string | null;
   text: {
     [k: string]: unknown;
   }[];
@@ -432,10 +432,6 @@ export interface PassageQuestion {
     | {
         id?: string | null;
         text: string;
-        /**
-         * Upload an image for this option (optional)
-         */
-        image?: (string | null) | Media;
         /**
          * Mark this option as the correct answer
          */
@@ -711,14 +707,13 @@ export interface PassagesSelect<T extends boolean = true> {
  */
 export interface PassageQuestionsSelect<T extends boolean = true> {
   passage?: T;
-  questionNumber?: T;
+  questionTitle?: T;
   text?: T;
   options?:
     | T
     | {
         id?: T;
         text?: T;
-        image?: T;
         isCorrect?: T;
       };
   'Question Explanation'?: T;

@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from 'uuid'
 const Questions: CollectionConfig = {
   slug: 'passageQuestions',
   admin: {
-    useAsTitle: 'questionNumber',
-    defaultColumns: ['questionNumber', 'passage'],
+    useAsTitle: 'questionTitle',
+    defaultColumns: ['questionTitle', 'passage'],
   },
   access: {
     read: () => true,
@@ -16,17 +16,15 @@ const Questions: CollectionConfig = {
       name: 'passage',
       type: 'relationship',
       relationTo: 'passages',
-      // required: true,
       admin: {
         description: 'Please select the passage this question belongs to',
       },
     },
     {
-      name: 'questionNumber',
-      type: 'number',
-      // required: true,
+      name: 'questionTitle',
+      type: 'text',
       admin: {
-        description: 'Please enter the question number',
+        description: 'Please enter the question title',
       },
     },
     {
@@ -46,9 +44,9 @@ const Questions: CollectionConfig = {
             'ol',
             'ul',
             'indent',
-            'upload',
+            // 'upload',
             'textAlign',
-            'relationship',
+            // 'relationship',
           ],
           leaves: ['bold', 'italic', 'underline', 'code'],
         },
@@ -81,14 +79,14 @@ const Questions: CollectionConfig = {
           type: 'text',
           required: true,
         },
-        {
-          name: 'image',
-          type: 'upload',
-          relationTo: 'media',
-          admin: {
-            description: 'Upload an image for this option (optional)',
-          },
-        },
+        // {
+        //   name: 'image',
+        //   type: 'upload',
+        //   relationTo: 'media',
+        //   admin: {
+        //     description: 'Upload an image for this option (optional)',
+        //   },
+        // },
         {
           name: 'isCorrect',
           type: 'checkbox',
@@ -124,9 +122,9 @@ const Questions: CollectionConfig = {
             'ol',
             'ul',
             'indent',
-            'upload',
+            // 'upload',
             'textAlign',
-            'relationship',
+            // 'relationship',
           ],
           leaves: ['bold', 'italic', 'underline', 'code'],
         },

@@ -419,10 +419,6 @@ export interface PassageQuestion {
    */
   passage?: (string | null) | Passage;
   /**
-   * Select the exam this question belongs to
-   */
-  exam?: (string | null) | Exam;
-  /**
    * Please enter the question number
    */
   questionNumber?: number | null;
@@ -715,7 +711,6 @@ export interface PassagesSelect<T extends boolean = true> {
  */
 export interface PassageQuestionsSelect<T extends boolean = true> {
   passage?: T;
-  exam?: T;
   questionNumber?: T;
   text?: T;
   options?:

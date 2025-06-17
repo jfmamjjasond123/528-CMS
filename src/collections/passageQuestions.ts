@@ -22,15 +22,6 @@ const Questions: CollectionConfig = {
       },
     },
     {
-      name: 'exam',
-      type: 'relationship',
-      relationTo: 'exams',
-      // required: true,
-      admin: {
-        description: 'Select the exam this question belongs to',
-      },
-    },
-    {
       name: 'questionNumber',
       type: 'number',
       // required: true,

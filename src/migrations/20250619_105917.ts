@@ -2,16 +2,34 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TABLE "payload_cms"."lessons_rels" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "payload_cms"."questions_options" DISABLE ROW LEVEL SECURITY;
-  ALTER TABLE "payload_cms"."questions" DISABLE ROW LEVEL SECURITY;
-  DROP TABLE "payload_cms"."lessons_rels" CASCADE;
-  DROP TABLE "payload_cms"."questions_options" CASCADE;
-  DROP TABLE "payload_cms"."questions" CASCADE;
-  
-  DROP INDEX IF EXISTS "payload_locked_documents_rels_questions_id_idx";
-  ALTER TABLE "payload_cms"."payload_locked_documents_rels" DROP COLUMN IF EXISTS "questions_id";
-  DROP TYPE "payload_cms"."enum_questions_type";`)
+    DO $$ BEGIN
+      IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'payload_cms' AND tablename = 'lessons_rels') THEN
+        EXECUTE 'ALTER TABLE "payload_cms"."lessons_rels" DISABLE ROW LEVEL SECURITY';
+        EXECUTE 'DROP TABLE "payload_cms"."lessons_rels" CASCADE';
+      END IF;
+    END $$;
+
+    DO $$ BEGIN
+      IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'payload_cms' AND tablename = 'questions_options') THEN
+        EXECUTE 'ALTER TABLE "payload_cms"."questions_options" DISABLE ROW LEVEL SECURITY';
+        EXECUTE 'DROP TABLE "payload_cms"."questions_options" CASCADE';
+      END IF;
+    END $$;
+
+    DO $$ BEGIN
+      IF EXISTS (SELECT FROM pg_tables WHERE schemaname = 'payload_cms' AND tablename = 'questions') THEN
+        EXECUTE 'ALTER TABLE "payload_cms"."questions" DISABLE ROW LEVEL SECURITY';
+        EXECUTE 'DROP TABLE "payload_cms"."questions" CASCADE';
+      END IF;
+    END $$;
+
+    -- We already commented out this line earlier because the table might not exist:
+    -- ALTER TABLE "payload_cms"."payload_locked_documents_rels" DROP CONSTRAINT "payload_locked_documents_rels_questions_fk";
+
+    DROP INDEX IF EXISTS "payload_locked_documents_rels_questions_id_idx";
+    ALTER TABLE "payload_cms"."payload_locked_documents_rels" DROP COLUMN IF EXISTS "questions_id";
+    DROP TYPE IF EXISTS "payload_cms"."enum_questions_type";
+  `)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {

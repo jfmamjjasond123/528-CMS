@@ -6,7 +6,7 @@ const Questions: CollectionConfig = {
   slug: 'passageQuestions',
   admin: {
     useAsTitle: 'questionTitle',
-    defaultColumns: ['questionTitle', 'passage'],
+    defaultColumns: ['questionTitle', 'passage', 'skill', 'questionType'],
   },
   access: {
     read: () => true,
@@ -18,6 +18,22 @@ const Questions: CollectionConfig = {
       relationTo: 'passages',
       admin: {
         description: 'Please select the passage this question belongs to',
+      },
+    },
+    {
+      name: 'skill',
+      type: 'relationship',
+      relationTo: 'questionSkills',
+      admin: {
+        description: 'Select the skill this question tests',
+      },
+    },
+    {
+      name: 'questionType',
+      type: 'relationship',
+      relationTo: 'questionTypes',
+      admin: {
+        description: 'Select the type of question',
       },
     },
     {
@@ -78,6 +94,14 @@ const Questions: CollectionConfig = {
           name: 'text',
           type: 'text',
           required: true,
+        },
+        {
+          name: 'distractorType',
+          type: 'relationship',
+          relationTo: 'distractorTypes',
+          admin: {
+            description: 'Select the distractor type for this option (optional)',
+          },
         },
         // {
         //   name: 'image',

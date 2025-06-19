@@ -70,7 +70,6 @@ export interface Config {
     users: User;
     media: Media;
     lessons: Lesson;
-    questions: Question;
     modules: Module;
     courses: Course;
     categories: Category;
@@ -79,6 +78,11 @@ export interface Config {
     passages: Passage;
     passageQuestions: PassageQuestion;
     exams: Exam;
+    subjects: Subject;
+    subjectCategories: SubjectCategory;
+    questionSkills: QuestionSkill;
+    questionTypes: QuestionType;
+    distractorTypes: DistractorType;
     'mux-video': MuxVideo;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -89,7 +93,6 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     lessons: LessonsSelect<false> | LessonsSelect<true>;
-    questions: QuestionsSelect<false> | QuestionsSelect<true>;
     modules: ModulesSelect<false> | ModulesSelect<true>;
     courses: CoursesSelect<false> | CoursesSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
@@ -98,6 +101,11 @@ export interface Config {
     passages: PassagesSelect<false> | PassagesSelect<true>;
     passageQuestions: PassageQuestionsSelect<false> | PassageQuestionsSelect<true>;
     exams: ExamsSelect<false> | ExamsSelect<true>;
+    subjects: SubjectsSelect<false> | SubjectsSelect<true>;
+    subjectCategories: SubjectCategoriesSelect<false> | SubjectCategoriesSelect<true>;
+    questionSkills: QuestionSkillsSelect<false> | QuestionSkillsSelect<true>;
+    questionTypes: QuestionTypesSelect<false> | QuestionTypesSelect<true>;
+    distractorTypes: DistractorTypesSelect<false> | DistractorTypesSelect<true>;
     'mux-video': MuxVideoSelect<false> | MuxVideoSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -228,7 +236,6 @@ export interface Lesson {
     };
     [k: string]: unknown;
   } | null;
-  questions?: (string | Question)[] | null;
   module: string | Module;
   order: number;
   updatedAt: string;
@@ -263,23 +270,6 @@ export interface MuxVideo {
         id?: string | null;
       }[]
     | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "questions".
- */
-export interface Question {
-  id: string;
-  questionText: string;
-  type: 'quiz' | 'exercise';
-  options: {
-    option: string;
-    id?: string | null;
-  }[];
-  correctAnswer: string;
-  lessons: string | Lesson;
   updatedAt: string;
   createdAt: string;
 }
@@ -377,6 +367,10 @@ export interface Level {
 export interface Passage {
   id: string;
   title: string;
+  /**
+   * Subject this passage belongs to
+   */
+  subject?: (string | null) | Subject;
   exam: string | Exam;
   content: {
     [k: string]: unknown;
@@ -385,6 +379,20 @@ export interface Passage {
    * Questions associated with this passage
    */
   questions?: (string | PassageQuestion)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects".
+ */
+export interface Subject {
+  id: string;
+  title: string;
+  /**
+   * Passages associated with this subject
+   */
+  passages?: (string | Passage)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -419,6 +427,14 @@ export interface PassageQuestion {
    */
   passage?: (string | null) | Passage;
   /**
+   * Select the skill this question tests
+   */
+  skill?: (string | null) | QuestionSkill;
+  /**
+   * Select the type of question
+   */
+  questionType?: (string | null) | QuestionType;
+  /**
    * Please enter the question title
    */
   questionTitle?: string | null;
@@ -433,6 +449,10 @@ export interface PassageQuestion {
         id?: string | null;
         text: string;
         /**
+         * Select the distractor type for this option (optional)
+         */
+        distractorType?: (string | null) | DistractorType;
+        /**
          * Mark this option as the correct answer
          */
         isCorrect: boolean;
@@ -446,6 +466,52 @@ export interface PassageQuestion {
         [k: string]: unknown;
       }[]
     | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "questionSkills".
+ */
+export interface QuestionSkill {
+  id: string;
+  title: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "questionTypes".
+ */
+export interface QuestionType {
+  id: string;
+  title: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Manage distractor types for question options
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "distractorTypes".
+ */
+export interface DistractorType {
+  id: string;
+  title: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjectCategories".
+ */
+export interface SubjectCategory {
+  id: string;
+  title: string;
+  /**
+   * Subjects belonging to this category
+   */
+  subjects?: (string | Subject)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -467,10 +533,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'lessons';
         value: string | Lesson;
-      } | null)
-    | ({
-        relationTo: 'questions';
-        value: string | Question;
       } | null)
     | ({
         relationTo: 'modules';
@@ -503,6 +565,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'exams';
         value: string | Exam;
+      } | null)
+    | ({
+        relationTo: 'subjects';
+        value: string | Subject;
+      } | null)
+    | ({
+        relationTo: 'subjectCategories';
+        value: string | SubjectCategory;
+      } | null)
+    | ({
+        relationTo: 'questionSkills';
+        value: string | QuestionSkill;
+      } | null)
+    | ({
+        relationTo: 'questionTypes';
+        value: string | QuestionType;
+      } | null)
+    | ({
+        relationTo: 'distractorTypes';
+        value: string | DistractorType;
       } | null)
     | ({
         relationTo: 'mux-video';
@@ -597,27 +679,8 @@ export interface LessonsSelect<T extends boolean = true> {
   duration?: T;
   video?: T;
   content?: T;
-  questions?: T;
   module?: T;
   order?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "questions_select".
- */
-export interface QuestionsSelect<T extends boolean = true> {
-  questionText?: T;
-  type?: T;
-  options?:
-    | T
-    | {
-        option?: T;
-        id?: T;
-      };
-  correctAnswer?: T;
-  lessons?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -695,6 +758,7 @@ export interface LevelsSelect<T extends boolean = true> {
  */
 export interface PassagesSelect<T extends boolean = true> {
   title?: T;
+  subject?: T;
   exam?: T;
   content?: T;
   questions?: T;
@@ -707,6 +771,8 @@ export interface PassagesSelect<T extends boolean = true> {
  */
 export interface PassageQuestionsSelect<T extends boolean = true> {
   passage?: T;
+  skill?: T;
+  questionType?: T;
   questionTitle?: T;
   text?: T;
   options?:
@@ -714,6 +780,7 @@ export interface PassageQuestionsSelect<T extends boolean = true> {
     | {
         id?: T;
         text?: T;
+        distractorType?: T;
         isCorrect?: T;
       };
   'Question Explanation'?: T;
@@ -730,6 +797,53 @@ export interface ExamsSelect<T extends boolean = true> {
   totalTimeInMinutes?: T;
   passages?: T;
   type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjects_select".
+ */
+export interface SubjectsSelect<T extends boolean = true> {
+  title?: T;
+  passages?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjectCategories_select".
+ */
+export interface SubjectCategoriesSelect<T extends boolean = true> {
+  title?: T;
+  subjects?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "questionSkills_select".
+ */
+export interface QuestionSkillsSelect<T extends boolean = true> {
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "questionTypes_select".
+ */
+export interface QuestionTypesSelect<T extends boolean = true> {
+  title?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "distractorTypes_select".
+ */
+export interface DistractorTypesSelect<T extends boolean = true> {
+  title?: T;
   updatedAt?: T;
   createdAt?: T;
 }

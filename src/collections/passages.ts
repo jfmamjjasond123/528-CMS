@@ -6,13 +6,21 @@ const Passages: CollectionConfig = {
   slug: 'passages',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'exam'],
+    defaultColumns: ['title', 'subject', 'exam'],
   },
   access: {
     read: () => true,
   },
   fields: [
     Title,
+    {
+      name: 'subject',
+      type: 'relationship',
+      relationTo: 'subjects',
+      admin: {
+        description: 'Subject this passage belongs to',
+      },
+    },
     {
       name: 'exam',
       type: 'relationship',

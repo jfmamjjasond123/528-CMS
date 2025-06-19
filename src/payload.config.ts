@@ -9,7 +9,7 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Lessons } from './collections/lesson'
-import Questions from './collections/question'
+// import Questions from './collections/question'
 import Modules from './collections/module'
 import Courses from './collections/course'
 import Media from './collections/Media'
@@ -19,6 +19,11 @@ import Levels from './collections/level'
 import Exams from './collections/exams'
 import Passages from './collections/passages'
 import PassageQuestions from './collections/passageQuestions'
+import Subjects from './collections/subjects'
+import SubjectCategory from './collections/subjectCategory'
+import QuestionSkill from './collections/questionSkill'
+import QuestionType from './collections/questionTypes'
+import QuestionOptionDistractor from './collections/questionOptionDistractors'
 import { muxVideoPlugin } from '@oversightstudio/mux-video'
 
 const filename = fileURLToPath(import.meta.url)
@@ -45,7 +50,7 @@ export default buildConfig({
     Users,
     Media,
     Lessons,
-    Questions,
+    // Questions,
     Modules,
     Courses,
     Categories,
@@ -54,6 +59,11 @@ export default buildConfig({
     Passages,
     PassageQuestions,
     Exams,
+    Subjects,
+    SubjectCategory,
+    QuestionSkill,
+    QuestionType,
+    QuestionOptionDistractor,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

@@ -57,15 +57,15 @@ export const Lessons: CollectionConfig = {
         condition: (data: any) => data.type === 'lesson',
       },
     },
-    {
-      name: 'questions',
-      type: 'relationship',
-      relationTo: 'questions',
-      hasMany: true,
-      admin: {
-        condition: (data: any) => ['quiz', 'exercise'].includes(data.type),
-      },
-    },
+    // {
+    //   name: 'questions',
+    //   type: 'relationship',
+    //   relationTo: 'questions',
+    //   hasMany: true,
+    //   admin: {
+    //     condition: (data: any) => ['quiz', 'exercise'].includes(data.type),
+    //   },
+    // },
     {
       name: 'module',
       type: 'relationship',

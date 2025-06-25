@@ -155,89 +155,89 @@ const Questions: CollectionConfig = {
       }),
     },
   ],
-  hooks: {
-    /**
-     * Sync the reverse relationship on the Passage whenever a question is created or its passage changes.
-     */
-    afterChange: [
-      async ({ doc, previousDoc, operation, req }) => {
-        const currentPassageId = doc.passage as string | undefined
-        const previousPassageId = previousDoc?.passage as string | undefined
+  // hooks: {
+  //   /**
+  //    * Sync the reverse relationship on the Passage whenever a question is created or its passage changes.
+  //    */
+  //   afterChange: [
+  //     async ({ doc, previousDoc, operation, req }) => {
+  //       const currentPassageId = doc.passage as string | undefined
+  //       const previousPassageId = previousDoc?.passage as string | undefined
 
-        const addQuestionToPassage = (passageId: string): void => {
-          if (!passageId) return
+  //       const addQuestionToPassage = (passageId: string): void => {
+  //         if (!passageId) return
 
-          process.nextTick(async () => {
-            try {
-              const passage = await req.payload.findByID({
-                collection: 'passages',
-                id: passageId,
-                depth: 0,
-                overrideAccess: true,
-              })
+  //         process.nextTick(async () => {
+  //           try {
+  //             const passage = await req.payload.findByID({
+  //               collection: 'passages',
+  //               id: passageId,
+  //               depth: 0,
+  //               overrideAccess: true,
+  //             })
 
-              const questions: string[] = (passage.questions || []).map((q: any) =>
-                typeof q === 'string' ? q : q?.id,
-              )
+  //             const questions: string[] = (passage.questions || []).map((q: any) =>
+  //               typeof q === 'string' ? q : q?.id,
+  //             )
 
-              if (!questions.includes(doc.id)) {
-                await req.payload.update({
-                  collection: 'passages',
-                  id: passageId,
-                  data: { questions: [...questions, doc.id] },
-                  overrideAccess: true,
-                })
-              }
-            } catch (e) {
-              req.payload.logger.error('Failed to add question to passage', e)
-            }
-          })
-        }
+  //             if (!questions.includes(doc.id)) {
+  //               await req.payload.update({
+  //                 collection: 'passages',
+  //                 id: passageId,
+  //                 data: { questions: [...questions, doc.id] },
+  //                 overrideAccess: true,
+  //               })
+  //             }
+  //           } catch (e) {
+  //             req.payload.logger.error('Failed to add question to passage', e)
+  //           }
+  //         })
+  //       }
 
-        const removeQuestionFromPassage = (passageId: string): void => {
-          if (!passageId) return
+  //       const removeQuestionFromPassage = (passageId: string): void => {
+  //         if (!passageId) return
 
-          process.nextTick(async () => {
-            try {
-              const passage = await req.payload.findByID({
-                collection: 'passages',
-                id: passageId,
-                depth: 0,
-                overrideAccess: true,
-              })
+  //         process.nextTick(async () => {
+  //           try {
+  //             const passage = await req.payload.findByID({
+  //               collection: 'passages',
+  //               id: passageId,
+  //               depth: 0,
+  //               overrideAccess: true,
+  //             })
 
-              const questions: string[] = (passage.questions || []).map((q: any) =>
-                typeof q === 'string' ? q : q?.id,
-              )
+  //             const questions: string[] = (passage.questions || []).map((q: any) =>
+  //               typeof q === 'string' ? q : q?.id,
+  //             )
 
-              if (questions.includes(doc.id)) {
-                await req.payload.update({
-                  collection: 'passages',
-                  id: passageId,
-                  data: { questions: questions.filter((q) => q !== doc.id) },
-                  overrideAccess: true,
-                })
-              }
-            } catch (e) {
-              req.payload.logger.error('Failed to remove question from passage', e)
-            }
-          })
-        }
+  //             if (questions.includes(doc.id)) {
+  //               await req.payload.update({
+  //                 collection: 'passages',
+  //                 id: passageId,
+  //                 data: { questions: questions.filter((q) => q !== doc.id) },
+  //                 overrideAccess: true,
+  //               })
+  //             }
+  //           } catch (e) {
+  //             req.payload.logger.error('Failed to remove question from passage', e)
+  //           }
+  //         })
+  //       }
 
-        if (operation === 'create') {
-          if (currentPassageId) addQuestionToPassage(currentPassageId)
-          return
-        }
+  //       if (operation === 'create') {
+  //         if (currentPassageId) addQuestionToPassage(currentPassageId)
+  //         return
+  //       }
 
-        if (operation === 'update') {
-          if (currentPassageId !== previousPassageId) {
-            if (previousPassageId) removeQuestionFromPassage(previousPassageId)
-            if (currentPassageId) addQuestionToPassage(currentPassageId)
-          }
-        }
-      },
-    ],
-  },
+  //       if (operation === 'update') {
+  //         if (currentPassageId !== previousPassageId) {
+  //           if (previousPassageId) removeQuestionFromPassage(previousPassageId)
+  //           if (currentPassageId) addQuestionToPassage(currentPassageId)
+  //         }
+  //       }
+  //     },
+  //   ],
+  // },
 }
 
 export default Questions

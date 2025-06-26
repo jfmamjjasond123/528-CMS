@@ -375,10 +375,6 @@ export interface Passage {
   content: {
     [k: string]: unknown;
   }[];
-  /**
-   * Questions associated with this passage
-   */
-  questions?: (string | PassageQuestion)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -761,7 +757,6 @@ export interface PassagesSelect<T extends boolean = true> {
   subject?: T;
   exam?: T;
   content?: T;
-  questions?: T;
   updatedAt?: T;
   createdAt?: T;
 }

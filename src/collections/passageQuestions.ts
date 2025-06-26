@@ -23,6 +23,7 @@ const Questions: CollectionConfig = {
       admin: {
         description: 'Please select the passage this question belongs to',
       },
+      required: true,
     },
     {
       name: 'skill',
@@ -84,6 +85,18 @@ const Questions: CollectionConfig = {
     {
       name: 'options',
       type: 'array',
+      minRows: 2,
+      validate: (value) => {
+        const correctCount = (value ?? []).filter((opt: any) => opt?.isCorrect === true).length
+
+        if (correctCount === 0) {
+          return 'You must mark one option as the correct answer.'
+        }
+        if (correctCount > 1) {
+          return 'Only one option can be marked as correct.'
+        }
+        return true
+      },
       fields: [
         {
           name: 'id',

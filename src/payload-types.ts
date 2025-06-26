@@ -421,7 +421,7 @@ export interface PassageQuestion {
   /**
    * Please select the passage this question belongs to
    */
-  passage?: (string | null) | Passage;
+  passage: string | Passage;
   /**
    * Select the skill this question tests
    */

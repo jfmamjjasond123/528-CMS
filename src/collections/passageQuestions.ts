@@ -1,3 +1,4 @@
+import { DistractorType } from './../payload-types'
 import { CollectionConfig } from 'payload'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { v4 as uuidv4 } from 'uuid'
@@ -87,13 +88,21 @@ const Questions: CollectionConfig = {
       type: 'array',
       minRows: 2,
       validate: (value) => {
+        const opts =
+          (value as {
+            isCorrect?: boolean
+            distractorType?: any
+          }[]) ?? []
         const correctCount = (value ?? []).filter((opt: any) => opt?.isCorrect === true).length
-
+        const correctOpts = opts.filter((o: any) => o?.isCorrect)
         if (correctCount === 0) {
           return 'You must mark one option as the correct answer.'
         }
         if (correctCount > 1) {
           return 'Only one option can be marked as correct.'
+        }
+        if (correctOpts[0]?.distractorType) {
+          return 'The correct option cannot have a distractor type.'
         }
         return true
       },

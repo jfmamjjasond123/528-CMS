@@ -7,6 +7,10 @@ const Questions: CollectionConfig = {
   admin: {
     useAsTitle: 'questionTitle',
     defaultColumns: ['questionTitle', 'passage', 'skill', 'questionType'],
+    pagination: {
+      defaultLimit: 10,
+      limits: [10, 50, 100, 1000],
+    },
   },
   access: {
     read: () => true,

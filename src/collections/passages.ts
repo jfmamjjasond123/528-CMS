@@ -7,6 +7,10 @@ const Passages: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'subject', 'exam'],
+    pagination: {
+      defaultLimit: 10,
+      limits: [10, 50, 100, 1000],
+    },
   },
   access: {
     read: () => true,

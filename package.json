@@ -31,6 +31,8 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "sharp": "0.32.6",
+    "slate": "^0.117.2",
+    "slate-react": "^0.117.3",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

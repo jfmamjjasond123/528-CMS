@@ -33,6 +33,8 @@ import { StrikethroughLeafButton as StrikethroughLeafButton_0b388c087d9de8c4f011
 import { StrikethroughLeaf as StrikethroughLeaf_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
 import { UnderlineLeafButton as UnderlineLeafButton_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
 import { UnderlineLeaf as UnderlineLeaf_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
+import { default as default_d6ad1ccc0415ee15e6a3577a65e098f1 } from '@/components/HighlightButton'
+import { default as default_7660cadccc916a55509dd3e485a04d36 } from '@/components/HighlightLeaf'
 import { BlockquoteElementButton as BlockquoteElementButton_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
 import { BlockquoteElement as BlockquoteElement_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
 import { H1ElementButton as H1ElementButton_0b388c087d9de8c4f011dd323a130cfb } from '@payloadcms/richtext-slate/client'
@@ -104,6 +106,8 @@ export const importMap = {
   "@payloadcms/richtext-slate/client#StrikethroughLeaf": StrikethroughLeaf_0b388c087d9de8c4f011dd323a130cfb,
   "@payloadcms/richtext-slate/client#UnderlineLeafButton": UnderlineLeafButton_0b388c087d9de8c4f011dd323a130cfb,
   "@payloadcms/richtext-slate/client#UnderlineLeaf": UnderlineLeaf_0b388c087d9de8c4f011dd323a130cfb,
+  "@/components/HighlightButton#default": default_d6ad1ccc0415ee15e6a3577a65e098f1,
+  "@/components/HighlightLeaf#default": default_7660cadccc916a55509dd3e485a04d36,
   "@payloadcms/richtext-slate/client#BlockquoteElementButton": BlockquoteElementButton_0b388c087d9de8c4f011dd323a130cfb,
   "@payloadcms/richtext-slate/client#BlockquoteElement": BlockquoteElement_0b388c087d9de8c4f011dd323a130cfb,
   "@payloadcms/richtext-slate/client#H1ElementButton": H1ElementButton_0b388c087d9de8c4f011dd323a130cfb,

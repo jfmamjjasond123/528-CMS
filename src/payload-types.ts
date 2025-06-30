@@ -452,6 +452,10 @@ export interface PassageQuestion {
          * Mark this option as the correct answer
          */
         isCorrect: boolean;
+        /**
+         * Provide an explanation for this option (optional)
+         */
+        optionExplanation?: string | null;
       }[]
     | null;
   /**
@@ -777,6 +781,7 @@ export interface PassageQuestionsSelect<T extends boolean = true> {
         text?: T;
         distractorType?: T;
         isCorrect?: T;
+        optionExplanation?: T;
       };
   'Question Explanation'?: T;
   updatedAt?: T;

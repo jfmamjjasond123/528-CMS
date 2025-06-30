@@ -1,4 +1,4 @@
-import { DistractorType } from './../payload-types'
+// import { DistractorType } from './../payload-types'
 import { CollectionConfig } from 'payload'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { v4 as uuidv4 } from 'uuid'
@@ -70,7 +70,18 @@ const Questions: CollectionConfig = {
             'textAlign',
             // 'relationship',
           ],
-          leaves: ['bold', 'italic', 'underline', 'code'],
+          leaves: [
+            'bold',
+            'italic',
+            'underline',
+            'code',
+            'strikethrough',
+            {
+              name: 'highlight',
+              Button: '@/components/HighlightButton',
+              Leaf: '@/components/HighlightLeaf',
+            },
+          ],
         },
       }),
       required: true,
@@ -127,6 +138,9 @@ const Questions: CollectionConfig = {
           relationTo: 'distractorTypes',
           admin: {
             description: 'Select the distractor type for this option (optional)',
+            condition: (data, siblingData, {}) => {
+              return siblingData?.isCorrect === false // Show only if NOT correct
+            },
           },
         },
         // {
@@ -145,6 +159,13 @@ const Questions: CollectionConfig = {
             description: 'Mark this option as the correct answer',
           },
           required: true,
+        },
+        {
+          name: 'optionExplanation',
+          type: 'text',
+          admin: {
+            description: 'Provide an explanation for this option (optional)',
+          },
         },
       ],
       admin: {
@@ -176,7 +197,17 @@ const Questions: CollectionConfig = {
             'textAlign',
             // 'relationship',
           ],
-          leaves: ['bold', 'italic', 'underline', 'code'],
+          leaves: [
+            'bold',
+            'italic',
+            'underline',
+            'code',
+            {
+              name: 'highlight',
+              Button: '@/components/HighlightButton',
+              Leaf: '@/components/HighlightLeaf',
+            },
+          ],
         },
       }),
     },

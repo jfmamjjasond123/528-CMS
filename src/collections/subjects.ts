@@ -12,14 +12,14 @@ const Subjects: CollectionConfig = {
   },
   fields: [
     Title,
-    // {
-    //   name: 'subjectCategory',
-    //   type: 'relationship',
-    //   relationTo: 'subjectCategories',
-    //   admin: {
-    //     description: 'Category this subject belongs to',
-    //   },
-    // },
+    {
+      name: 'subjectCategory',
+      type: 'relationship',
+      relationTo: 'subjectCategories',
+      admin: {
+        description: 'Category this subject belongs to',
+      },
+    },
     {
       name: 'passages',
       type: 'relationship',

@@ -386,9 +386,27 @@ export interface Subject {
   id: string;
   title: string;
   /**
+   * Category this subject belongs to
+   */
+  subjectCategory?: (string | null) | SubjectCategory;
+  /**
    * Passages associated with this subject
    */
   passages?: (string | Passage)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subjectCategories".
+ */
+export interface SubjectCategory {
+  id: string;
+  title: string;
+  /**
+   * Subjects belonging to this category
+   */
+  subjects?: (string | Subject)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -498,20 +516,6 @@ export interface QuestionType {
 export interface DistractorType {
   id: string;
   title: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "subjectCategories".
- */
-export interface SubjectCategory {
-  id: string;
-  title: string;
-  /**
-   * Subjects belonging to this category
-   */
-  subjects?: (string | Subject)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -806,6 +810,7 @@ export interface ExamsSelect<T extends boolean = true> {
  */
 export interface SubjectsSelect<T extends boolean = true> {
   title?: T;
+  subjectCategory?: T;
   passages?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -516,6 +516,10 @@ export interface QuestionType {
 export interface DistractorType {
   id: string;
   title: string;
+  /**
+   * Suggestion for how to improve or avoid this type of distractor
+   */
+  improvementText?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -849,6 +853,7 @@ export interface QuestionTypesSelect<T extends boolean = true> {
  */
 export interface DistractorTypesSelect<T extends boolean = true> {
   title?: T;
+  improvementText?: T;
   updatedAt?: T;
   createdAt?: T;
 }

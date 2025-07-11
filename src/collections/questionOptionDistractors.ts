@@ -5,14 +5,22 @@ const QuestionOptionDistractor: CollectionConfig = {
   slug: 'distractorTypes',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title'], // Removed 'description'
+    defaultColumns: ['title', 'improvementText'],
     description: 'Manage distractor types for question options',
   },
   access: {
     read: () => true,
   },
   fields: [
-    Title, // Only title now
+    Title,
+    {
+      name: 'improvementText',
+      type: 'text',
+      label: 'Improvement Text',
+      admin: {
+        description: 'Suggestion for how to improve or avoid this type of distractor',
+      },
+    },
   ],
 }
 

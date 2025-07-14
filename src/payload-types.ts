@@ -453,7 +453,11 @@ export interface PassageQuestion {
         /**
          * Provide an explanation for this option (optional)
          */
-        optionExplanation?: string | null;
+        optionExplanation?:
+          | {
+              [k: string]: unknown;
+            }[]
+          | null;
       }[]
     | null;
   /**
@@ -585,7 +589,11 @@ export interface FLPassageQuestion {
         /**
          * Provide an explanation for this option (optional)
          */
-        optionExplanation?: string | null;
+        optionExplanation?:
+          | {
+              [k: string]: unknown;
+            }[]
+          | null;
       }[]
     | null;
   /**

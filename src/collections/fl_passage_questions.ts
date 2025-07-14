@@ -99,7 +99,36 @@ const FL_PassageQuestions: CollectionConfig = {
         },
         {
           name: 'optionExplanation',
-          type: 'text',
+          type: 'richText',
+          editor: slateEditor({
+            admin: {
+              elements: [
+                'h1',
+                'h2',
+                'h3',
+                'h4',
+                'h5',
+                'h6',
+                'blockquote',
+                'link',
+                'ol',
+                'ul',
+                'indent',
+                'textAlign',
+              ],
+              leaves: [
+                'bold',
+                'italic',
+                'underline',
+                'code',
+                {
+                  name: 'highlight',
+                  Button: '@/components/HighlightButton',
+                  Leaf: '@/components/HighlightLeaf',
+                },
+              ],
+            },
+          }),
           admin: {
             description: 'Provide an explanation for this option (optional)',
           },

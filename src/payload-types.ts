@@ -77,7 +77,9 @@ export interface Config {
     levels: Level;
     passages: Passage;
     passageQuestions: PassageQuestion;
-    exams: Exam;
+    FL_exams: FLExam;
+    FL_Passages: FL_Passage;
+    FL_passage_questions: FLPassageQuestion;
     subjects: Subject;
     subjectCategories: SubjectCategory;
     questionSkills: QuestionSkill;
@@ -100,7 +102,9 @@ export interface Config {
     levels: LevelsSelect<false> | LevelsSelect<true>;
     passages: PassagesSelect<false> | PassagesSelect<true>;
     passageQuestions: PassageQuestionsSelect<false> | PassageQuestionsSelect<true>;
-    exams: ExamsSelect<false> | ExamsSelect<true>;
+    FL_exams: FLExamsSelect<false> | FLExamsSelect<true>;
+    FL_Passages: FL_PassagesSelect<false> | FL_PassagesSelect<true>;
+    FL_passage_questions: FLPassageQuestionsSelect<false> | FLPassageQuestionsSelect<true>;
     subjects: SubjectsSelect<false> | SubjectsSelect<true>;
     subjectCategories: SubjectCategoriesSelect<false> | SubjectCategoriesSelect<true>;
     questionSkills: QuestionSkillsSelect<false> | QuestionSkillsSelect<true>;
@@ -370,8 +374,7 @@ export interface Passage {
   /**
    * Subject this passage belongs to
    */
-  subject?: (string | null) | Subject;
-  exam: string | Exam;
+  subject: string | Subject;
   content: {
     [k: string]: unknown;
   }[];
@@ -412,26 +415,6 @@ export interface SubjectCategory {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exams".
- */
-export interface Exam {
-  id: string;
-  title: string;
-  slug: string;
-  /**
-   * If exam type is Q-bank, total is not required Please give 0 minute as value
-   */
-  totalTimeInMinutes: number;
-  /**
-   * Please select the passages for this exam
-   */
-  passages?: (string | Passage)[] | null;
-  type: 'Full-Length Exam' | 'Q-bank' | 'Timed-Q-bank';
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "passageQuestions".
  */
 export interface PassageQuestion {
@@ -443,18 +426,15 @@ export interface PassageQuestion {
   /**
    * Select the skill this question tests
    */
-  skill?: (string | null) | QuestionSkill;
+  skill: string | QuestionSkill;
   /**
    * Select the type of question
    */
-  questionType?: (string | null) | QuestionType;
+  questionType: string | QuestionType;
   /**
    * Please enter the question title
    */
-  questionTitle?: string | null;
-  text: {
-    [k: string]: unknown;
-  }[];
+  questionTitle: string;
   /**
    * Add options for the question. Make sure to mark exactly one option as correct.
    */
@@ -525,6 +505,102 @@ export interface DistractorType {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FL_exams".
+ */
+export interface FLExam {
+  id: string;
+  title: string;
+  slug: string;
+  /**
+   * If exam type is Q-bank, total is not required. Please give 0 minute as value
+   */
+  totalTimeInMinutes: number;
+  /**
+   * Please select the passages for this exam
+   */
+  passages?: (string | Passage)[] | null;
+  type: 'Full-Length Exam' | 'Q-bank' | 'Timed-Q-bank';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FL_Passages".
+ */
+export interface FL_Passage {
+  id: string;
+  title: string;
+  /**
+   * Subject this passage belongs to
+   */
+  subject: string | Subject;
+  exam: string | FLExam;
+  content: {
+    [k: string]: unknown;
+  }[];
+  /**
+   * Questions associated with this passage
+   */
+  questions?: (string | FLPassageQuestion)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FL_passage_questions".
+ */
+export interface FLPassageQuestion {
+  id: string;
+  /**
+   * Please select the passage this question belongs to
+   */
+  passage: string | FL_Passage;
+  /**
+   * Select the skill this question tests
+   */
+  skill: string | QuestionSkill;
+  /**
+   * Select the type of question
+   */
+  questionType: string | QuestionType;
+  /**
+   * Please enter the question title
+   */
+  questionTitle: string;
+  /**
+   * Add options for the question. Mark exactly one as correct.
+   */
+  options?:
+    | {
+        id?: string | null;
+        text: string;
+        /**
+         * Select the distractor type for this option (optional)
+         */
+        distractorType?: (string | null) | DistractorType;
+        /**
+         * Mark this option as the correct answer
+         */
+        isCorrect: boolean;
+        /**
+         * Provide an explanation for this option (optional)
+         */
+        optionExplanation?: string | null;
+      }[]
+    | null;
+  /**
+   * Give the explanation for the question if available
+   */
+  'Question Explanation'?:
+    | {
+        [k: string]: unknown;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -571,8 +647,16 @@ export interface PayloadLockedDocument {
         value: string | PassageQuestion;
       } | null)
     | ({
-        relationTo: 'exams';
-        value: string | Exam;
+        relationTo: 'FL_exams';
+        value: string | FLExam;
+      } | null)
+    | ({
+        relationTo: 'FL_Passages';
+        value: string | FL_Passage;
+      } | null)
+    | ({
+        relationTo: 'FL_passage_questions';
+        value: string | FLPassageQuestion;
       } | null)
     | ({
         relationTo: 'subjects';
@@ -767,7 +851,6 @@ export interface LevelsSelect<T extends boolean = true> {
 export interface PassagesSelect<T extends boolean = true> {
   title?: T;
   subject?: T;
-  exam?: T;
   content?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -781,7 +864,6 @@ export interface PassageQuestionsSelect<T extends boolean = true> {
   skill?: T;
   questionType?: T;
   questionTitle?: T;
-  text?: T;
   options?:
     | T
     | {
@@ -797,14 +879,49 @@ export interface PassageQuestionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "exams_select".
+ * via the `definition` "FL_exams_select".
  */
-export interface ExamsSelect<T extends boolean = true> {
+export interface FLExamsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   totalTimeInMinutes?: T;
   passages?: T;
   type?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FL_Passages_select".
+ */
+export interface FL_PassagesSelect<T extends boolean = true> {
+  title?: T;
+  subject?: T;
+  exam?: T;
+  content?: T;
+  questions?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FL_passage_questions_select".
+ */
+export interface FLPassageQuestionsSelect<T extends boolean = true> {
+  passage?: T;
+  skill?: T;
+  questionType?: T;
+  questionTitle?: T;
+  options?:
+    | T
+    | {
+        id?: T;
+        text?: T;
+        distractorType?: T;
+        isCorrect?: T;
+        optionExplanation?: T;
+      };
+  'Question Explanation'?: T;
   updatedAt?: T;
   createdAt?: T;
 }

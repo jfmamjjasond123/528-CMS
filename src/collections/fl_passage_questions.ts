@@ -1,10 +1,9 @@
-// import { DistractorType } from './../payload-types'
 import { CollectionConfig } from 'payload'
 import { slateEditor } from '@payloadcms/richtext-slate'
 import { v4 as uuidv4 } from 'uuid'
 
-const Questions: CollectionConfig = {
-  slug: 'passageQuestions',
+const FL_PassageQuestions: CollectionConfig = {
+  slug: 'FL_passage_questions',
   admin: {
     useAsTitle: 'questionTitle',
     defaultColumns: ['questionTitle', 'passage', 'skill', 'questionType'],
@@ -20,7 +19,7 @@ const Questions: CollectionConfig = {
     {
       name: 'passage',
       type: 'relationship',
-      relationTo: 'passages',
+      relationTo: 'FL_Passages',
       admin: {
         description: 'Please select the passage this question belongs to',
       },
@@ -52,35 +51,17 @@ const Questions: CollectionConfig = {
       },
       required: true,
     },
-    // {
-    //   name: 'image',
-    //   type: 'upload',
-    //   relationTo: 'media',
-    //   admin: {
-    //     description: 'Upload an image for the question (optional)',
-    //   },
-    // },
     {
       name: 'options',
       type: 'array',
       minRows: 2,
       validate: (value) => {
-        const opts =
-          (value as {
-            isCorrect?: boolean
-            distractorType?: any
-          }[]) ?? []
-        const correctCount = (value ?? []).filter((opt: any) => opt?.isCorrect === true).length
-        const correctOpts = opts.filter((o: any) => o?.isCorrect)
-        if (correctCount === 0) {
-          return 'You must mark one option as the correct answer.'
-        }
-        if (correctCount > 1) {
-          return 'Only one option can be marked as correct.'
-        }
-        if (correctOpts[0]?.distractorType) {
+        const opts = (value ?? []) as { isCorrect?: boolean; distractorType?: any }[]
+        const correctOpts = opts.filter((o) => o?.isCorrect)
+        if (correctOpts.length === 0) return 'You must mark one option as the correct answer.'
+        if (correctOpts.length > 1) return 'Only one option can be marked as correct.'
+        if (correctOpts[0]?.distractorType)
           return 'The correct option cannot have a distractor type.'
-        }
         return true
       },
       fields: [
@@ -104,19 +85,9 @@ const Questions: CollectionConfig = {
           relationTo: 'distractorTypes',
           admin: {
             description: 'Select the distractor type for this option (optional)',
-            condition: (data, siblingData, {}) => {
-              return siblingData?.isCorrect === false // Show only if NOT correct
-            },
+            condition: (_, siblingData) => siblingData?.isCorrect === false,
           },
         },
-        // {
-        //   name: 'image',
-        //   type: 'upload',
-        //   relationTo: 'media',
-        //   admin: {
-        //     description: 'Upload an image for this option (optional)',
-        //   },
-        // },
         {
           name: 'isCorrect',
           type: 'checkbox',
@@ -135,8 +106,7 @@ const Questions: CollectionConfig = {
         },
       ],
       admin: {
-        description:
-          'Add options for the question. Make sure to mark exactly one option as correct.',
+        description: 'Add options for the question. Mark exactly one as correct.',
       },
     },
     {
@@ -159,9 +129,7 @@ const Questions: CollectionConfig = {
             'ol',
             'ul',
             'indent',
-            // 'upload',
             'textAlign',
-            // 'relationship',
           ],
           leaves: [
             'bold',
@@ -180,4 +148,4 @@ const Questions: CollectionConfig = {
   ],
 }
 
-export default Questions
+export default FL_PassageQuestions

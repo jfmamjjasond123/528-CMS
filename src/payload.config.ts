@@ -16,7 +16,9 @@ import Media from './collections/Media'
 import Categories from './collections/category'
 import Instructors from './collections/instructor'
 import Levels from './collections/level'
-import Exams from './collections/exams'
+import FL_Exams from './collections/fl_exams'
+import FL_Passages from './collections/fl_passages'
+import FL_PassageQuestions from './collections/fl_passage_questions'
 import Passages from './collections/passages'
 import PassageQuestions from './collections/passageQuestions'
 import Subjects from './collections/subjects'
@@ -58,7 +60,9 @@ export default buildConfig({
     Levels,
     Passages,
     PassageQuestions,
-    Exams,
+    FL_Exams,
+    FL_Passages,
+    FL_PassageQuestions,
     Subjects,
     SubjectCategory,
     QuestionSkill,

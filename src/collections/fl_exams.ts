@@ -2,8 +2,8 @@ import { CollectionConfig } from 'payload'
 import { Title } from '@/Fields/Title'
 import { Slug } from '@/Fields/slug'
 
-const Exams: CollectionConfig = {
-  slug: 'exams',
+const FL_Exams: CollectionConfig = {
+  slug: 'FL_exams',
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'totalTimeInMinutes'],
@@ -20,7 +20,7 @@ const Exams: CollectionConfig = {
       type: 'number',
       required: true,
       admin: {
-        description: 'If exam type is Q-bank, total is not required Please give 0 minute as value',
+        description: 'If exam type is Q-bank, total is not required. Please give 0 minute as value',
       },
     },
     {
@@ -36,10 +36,13 @@ const Exams: CollectionConfig = {
       name: 'type',
       type: 'select',
       options: ['Full-Length Exam', 'Q-bank', 'Timed-Q-bank'],
-      defaultValue: 'Q-bank',
+      defaultValue: 'Full-Length Exam',
       required: true,
+      admin: {
+        readOnly: true,
+      },
     },
   ],
 }
 
-export default Exams
+export default FL_Exams

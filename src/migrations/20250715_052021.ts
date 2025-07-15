@@ -2,10 +2,16 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   ALTER TABLE "payload_cms"."fl_passages" DROP CONSTRAINT "fl_passages_exam_id_fl_exams_id_fk";
-  
-  DROP INDEX IF EXISTS "fl_passages_exam_idx";
-  ALTER TABLE "payload_cms"."fl_passages" DROP COLUMN IF EXISTS "exam_id";`)
+    DO $$ BEGIN
+      ALTER TABLE "payload_cms"."fl_passages" DROP CONSTRAINT "fl_passages_exam_id_fl_exams_id_fk";
+    EXCEPTION
+      WHEN undefined_object THEN NULL;
+    END $$;
+
+    DROP INDEX IF EXISTS "fl_passages_exam_idx";
+
+    ALTER TABLE "payload_cms"."fl_passages" DROP COLUMN IF EXISTS "exam_id";
+  `)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {

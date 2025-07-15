@@ -514,7 +514,6 @@ export interface DistractorType {
 export interface FLExam {
   id: string;
   title: string;
-  slug: string;
   /**
    * If exam type is Q-bank, total is not required. Please give 0 minute as value
    */
@@ -522,7 +521,7 @@ export interface FLExam {
   /**
    * Please select the passages for this exam
    */
-  passages?: (string | Passage)[] | null;
+  passages?: (string | FL_Passage)[] | null;
   type: 'Full-Length Exam' | 'Q-bank' | 'Timed-Q-bank';
   updatedAt: string;
   createdAt: string;
@@ -538,7 +537,6 @@ export interface FL_Passage {
    * Subject this passage belongs to
    */
   subject: string | Subject;
-  exam: string | FLExam;
   content: {
     [k: string]: unknown;
   }[];
@@ -891,7 +889,6 @@ export interface PassageQuestionsSelect<T extends boolean = true> {
  */
 export interface FLExamsSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   totalTimeInMinutes?: T;
   passages?: T;
   type?: T;
@@ -905,7 +902,6 @@ export interface FLExamsSelect<T extends boolean = true> {
 export interface FL_PassagesSelect<T extends boolean = true> {
   title?: T;
   subject?: T;
-  exam?: T;
   content?: T;
   questions?: T;
   updatedAt?: T;

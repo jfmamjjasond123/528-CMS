@@ -1,6 +1,5 @@
 import { CollectionConfig } from 'payload'
 import { Title } from '@/Fields/Title'
-import { Slug } from '@/Fields/slug'
 
 const FL_Exams: CollectionConfig = {
   slug: 'FL_exams',
@@ -13,7 +12,6 @@ const FL_Exams: CollectionConfig = {
   },
   fields: [
     Title,
-    Slug,
     {
       name: 'totalTimeInMinutes',
       label: 'Total Time (Minutes)',
@@ -26,7 +24,7 @@ const FL_Exams: CollectionConfig = {
     {
       name: 'passages',
       type: 'relationship',
-      relationTo: 'passages',
+      relationTo: 'FL_Passages',
       hasMany: true,
       admin: {
         description: 'Please select the passages for this exam',

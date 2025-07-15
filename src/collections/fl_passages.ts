@@ -28,12 +28,12 @@ const FL_Passages: CollectionConfig = {
       },
       required: true,
     },
-    {
-      name: 'exam',
-      type: 'relationship',
-      relationTo: 'FL_exams',
-      required: true,
-    },
+    // {
+    //   name: 'exam',
+    //   type: 'relationship',
+    //   relationTo: 'FL_exams',
+    //   required: true,
+    // },
     {
       name: 'content',
       type: 'richText',

@@ -32,7 +32,11 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
-  cors: '*',
+  cors: [
+    'https://khan-clone-new-landing-page-x4sg.vercel.app',
+    'http://localhost:3000',
+    'https://payload-cms-fl6w.onrender.com',
+  ],
   admin: {
     user: Users.slug,
     importMap: {

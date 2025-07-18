@@ -541,7 +541,7 @@ export interface FL_Passage {
     [k: string]: unknown;
   }[];
   /**
-   * Questions associated with this passage
+   * Questions associated with this passage (automatically managed)
    */
   questions?: (string | FLPassageQuestion)[] | null;
   updatedAt: string;

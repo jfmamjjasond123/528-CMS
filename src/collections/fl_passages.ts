@@ -17,23 +17,6 @@ const FL_Passages: CollectionConfig = {
   access: {
     read: () => true,
   },
-  hooks: {
-    beforeChange: [
-      async ({ data, req, originalDoc }) => {
-        // Only log if this is a manual update (not from sync)
-        const isSyncUpdate =
-          req.headers && 'x-sync-update' in req.headers && req.headers['x-sync-update'] === 'true'
-
-        if (!isSyncUpdate && data.questions) {
-          console.log(
-            `📝 Manual questions update for passage ${originalDoc?.id || 'new'}: ${data.questions.length} questions`,
-          )
-        }
-
-        return data
-      },
-    ],
-  },
   fields: [
     Title,
     {
@@ -94,9 +77,7 @@ const FL_Passages: CollectionConfig = {
       relationTo: 'FL_passage_questions',
       hasMany: true,
       admin: {
-        description: 'Questions associated with this passage (automatically managed)',
-        readOnly: true,
-        // disabled: true,
+        description: 'Questions associated with this passage',
       },
     },
   ],
